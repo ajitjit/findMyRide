@@ -30,14 +30,13 @@ class ViewController: UIViewController {
         addVehicleAnnotations()
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        scrollView.collectionViewLayout.invalidateLayout()
+    }
+    
     func addVehicleAnnotations() {
-        let coordinatesArray: [(Double, Double)] = vehicleViewModel.fetchVehicles().compactMap { (vehicle) -> (Double, Double)? in
-            if let latitude = vehicle.lat, let longitude = vehicle.lng {
-                return (latitude, longitude)
-            } else {
-                return nil
-            }
-        }
+        let coordinatesArray = vehicleViewModel.getCoordinateArray()
         for (index, coordinate) in coordinatesArray.enumerated() {
             let cordinate = CLLocationCoordinate2D(latitude: coordinate.0, longitude: coordinate.1)
             addPin(cordinate: cordinate,index:index)
@@ -93,7 +92,7 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
 
 extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        vehicleViewModel.vehicleCount()
+        vehicleViewModel.availableVehicleCount()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -116,7 +115,6 @@ extension ViewController: MKMapViewDelegate {
         }
         annotationView?.image = UIImage(systemName: "car.side.rear.open.fill")
         return annotationView
-        
     }
     
     func mapView(_ mapView: MKMapView, didSelect annotation: MKAnnotation) {

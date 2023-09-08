@@ -16,11 +16,20 @@ class VehicleViewModel {
     }
     
     func vehicleAt(_ index:Int) -> Vehicle {
-        return vehicles[index]
+        if index < vehicles.count {
+            return vehicles[index]
+        } else {
+            let index = vehicles.count - 1
+            return vehicles[index] //last Vehicle
+        }
     }
     
     func vehicleCount() -> Int {
         vehicles.count
+    }
+    
+    func availableVehicleCount() -> Int {
+        return getCoordinateArray().count
     }
     
     func getCoordinateArray() -> [(Double,Double)] {
@@ -42,5 +51,5 @@ class VehicleViewModel {
         }
         return nil
     }
-        
+    
 }

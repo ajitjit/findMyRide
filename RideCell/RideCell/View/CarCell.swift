@@ -47,9 +47,10 @@ class CarCell : UICollectionViewCell {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         numberPlate.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: -20),
+            imageView.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 10),
+            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: -40),
             imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            stackView.bottomAnchor.constraint(equalTo: imageView.topAnchor),
+            stackView.topAnchor.constraint(equalTo: imageView.bottomAnchor),
             stackView.leadingAnchor.constraint(equalTo: imageView.leadingAnchor)
         ])
     }
